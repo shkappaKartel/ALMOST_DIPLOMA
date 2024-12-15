@@ -2,7 +2,7 @@ from aiogram import Bot, Dispatcher, executor, types
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 import asyncio
 
-api = "7481324612:AAFo4k99IxVuILJVdrSL_orVlAlK9VM47Ig"
+api = "APIKEY*******"
 bot = Bot(token=api)
 dp = Dispatcher(bot, storage=MemoryStorage())
 
@@ -10,6 +10,7 @@ dp = Dispatcher(bot, storage=MemoryStorage())
 @dp.message_handler(text = ["nd"])
 async def urban_message(message):
     print("090909")
+    await message.anwer("")
 
 
 @dp.message_handler(commands=['start'])
