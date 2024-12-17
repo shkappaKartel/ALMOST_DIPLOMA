@@ -5,7 +5,7 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 from aiogram.dispatcher import FSMContext
 import asyncio
 
-api = "7481324612:AAFo4k99IxVuILJVdrSL_orVlAlK9VM47Ig"
+api = "APIKEY**************"
 bot = Bot(token=api)
 dp = Dispatcher(bot, storage=MemoryStorage())
 kb=ReplyKeyboardMarkup()
@@ -44,7 +44,7 @@ async def set_growth(message, state):
 
 
 @dp.message_handler(state=UserState.growth)
-async def set_growth(message, state):
+async def set_weight(message, state):
     await state.update_data(growth=message.text)
     await message.answer("Введите свой вес")
     await UserState.weight.set()
