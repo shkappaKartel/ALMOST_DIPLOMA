@@ -12,6 +12,16 @@ def initiate_db():
             image_url TEXT
         )
     ''')
+
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS Users (
+            id INTEGER PRIMARY KEY,
+            username TEXT NOT NULL,
+            email TEXT NOT NULL,
+            age INTEGER NOT NULL,
+            balance INTEGER DEFAULT 1000
+        )
+    ''')
     connection.commit()
     connection.close()
 
@@ -26,11 +36,31 @@ def add_product(title, description, price, image_url):
     connection.close()
 
 def get_all_products():
+    conn = sqlite3.connect("products.db")
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT id, title, description, price, image_url FROM Products")
+    products = cursor.fetchall()
+
+    conn.close()
+    return products
+
+def add_user(username, email, age):
     connection = sqlite3.connect('products.db')
     cursor = connection.cursor()
-    cursor.execute('SELECT title, description, price, image_url FROM Products')
-    products = cursor.fetchall()
+    cursor.execute('''
+        INSERT INTO Users (username, email, age, balance)
+        VALUES (?, ?, ?, 1000)
+    ''', (username, email, age))
+    connection.commit()
     connection.close()
-    return products
+
+def is_included(username):
+    connection = sqlite3.connect('products.db')
+    cursor = connection.cursor()
+    cursor.execute('SELECT COUNT(*) FROM Users WHERE username = ?', (username,))
+    exists = cursor.fetchone()[0] > 0
+    connection.close()
+    return exists
 
 initiate_db()
