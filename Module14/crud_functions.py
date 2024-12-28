@@ -10,7 +10,7 @@ def initiate_db():
             description TEXT,
             price INTEGER NOT NULL,
             image_url TEXT
-        )
+        ) bb
     ''')
 
     cursor.execute('''
