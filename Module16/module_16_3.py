@@ -18,11 +18,11 @@ async def post_user(username: Annotated[str, Path(max_length=30, description='В
 
 @app.put('/user/{user_id}/{username}/{age}')
 async def put_users(user_id: int, username: Annotated[str, Path(max_length=30, description='Введите своё имя', example='Ivan')],
-                    age: Annotated[int, Path(ge=18, le=120, description='Введите возраст', example='24')]) -> str:
+                    age: Annotated[str, Path(ge=18, le=120, description='Введите возраст', example='24')]) -> str:
     users[user_id] = f'Имя: {username}, возраст: {age}'
     return f'Пользователь {user_id} обновлён'
 
 app.delete('/user/{user_id}')
-async def del_users(user_id: Annotated[str, Path(description='Введите ID для удаления', example='1')]) -> str:
-    users.pop(user_id)
+async def del_users(user_id: Annotated[int, Path(description='Введите ID для удаления', example='1')]) -> str:
+    users.pop(str(user_id))
     return f'Пользователь {user_id} удалён.'
